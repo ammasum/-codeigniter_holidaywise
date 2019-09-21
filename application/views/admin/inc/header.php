@@ -24,6 +24,9 @@
 </head>
 
 <body id="page-top">
+<script>
+  const baseUrl = '<?php echo base_url(); ?>'
+</script>
 
   <!-- Page Wrapper -->
   <div id="wrapper">

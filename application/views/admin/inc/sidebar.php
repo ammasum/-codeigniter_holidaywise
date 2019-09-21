@@ -34,8 +34,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="buttons.html">Post list</a>
-            <a class="collapse-item" href="cards.html">Create Post</a>
+            <a class="collapse-item" href="<?php echo lang('post_list'); ?>">Post list</a>
+            <a class="collapse-item" href="<?php echo lang('create_post'); ?>">Create Post</a>
           </div>
         </div>
       </li>
