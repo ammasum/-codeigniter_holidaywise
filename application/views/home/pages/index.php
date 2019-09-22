@@ -1,10 +1,10 @@
-<?php $assets_path = base_url() . "assets/home/" ?>
+<?php $assets_path = base_url("assets/home/") ?>
 <!-- banner and search starts here -->
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
       <div class="overlay"></div>
-      <img src="<?php echo $assets_path . 'images/banner1.jpg'; ?>" class="d-block w-100" alt="...">
+      <img src="<?php echo lang('assets') . 'images/banner1.jpg'; ?>" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h3>Lorem Ipsum Dolor Sit Amet</h3>
           <h1>Nulla vitae elit libero.</h1>
@@ -12,7 +12,7 @@
     </div>
     <div class="carousel-item">
       <div class="overlay"></div>      
-      <img src="<?php echo $assets_path . 'images/banner2.jpg'; ?>" class="d-block w-100" alt="...">
+      <img src="<?php echo lang('assets') . 'images/banner2.jpg'; ?>" class="d-block w-100" alt="...">
       <div class="carousel-caption d-none d-md-block">
           <h3>Lorem Ipsum Dolor Sit Amet</h3>
           <h1>Nharetra augue mollis interdum.</h1>
@@ -63,7 +63,7 @@
       <div class="col-md-4 col-sm-6">
         <div class="single-package">
           <div class="package-image">
-            <a href="#"><img src="<?php echo $assets_path . 'images/destinations/2.jpg'; ?>" alt="">
+            <a href="#"><img src="<?php echo lang('assets') . 'images/destinations/2.jpg'; ?>" alt="">
             </a>
           </div>
           <div class="package-content">
@@ -90,7 +90,7 @@
       <div class="col-md-4 col-sm-6">
         <div class="single-package">
           <div class="package-image">
-            <a href="#"><img src="<?php echo $assets_path . 'images/destinations/3.jpg'; ?>" alt="">
+            <a href="#"><img src="<?php echo lang('assets') . 'images/destinations/3.jpg'; ?>" alt="">
             </a>
           </div>
           <div class="package-content">

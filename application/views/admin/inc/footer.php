@@ -35,17 +35,11 @@
   <!-- Custom scripts for all pages-->
   <script src="<?php echo $this->lang->line('admin_assets') . 'js/sb-admin-2.min.js'; ?>"></script>
 
-  <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="<?php echo $this->lang->line('admin_assets') . 'js/demo/chart-area-demo.js'; ?>"></script>
-  <script src="<?php echo $this->lang->line('admin_assets') . 'js/demo/chart-pie-demo.js'; ?>"></script>
 
 
   <!-- *************Summernote Note*************** -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
-  <script src="<?php echo $this->lang->line('admin_assets') . 'js/custom.js'; ?>"></script>
+  <script src="<?php echo lang('admin_assets') . 'js/custom.js'; ?>"></script>
 </body>
 
 </html>

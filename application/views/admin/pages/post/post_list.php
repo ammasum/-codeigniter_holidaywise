@@ -1,4 +1,8 @@
     <?php $this->load->view('admin/inc/delete_model'); ?>
+    <script>
+      var deleteId;
+
+    </script>
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
@@ -52,8 +56,16 @@
                                 <td class="align-middle"><?php echo $row->title; ?></td>
                                 <td class="align-middle"><?php echo $row->doc; ?></td>
                                 <td class="align-middle">
-                                    <a href="<?php echo lang('edit_post') . $row->id; ?>">Edit</a>
-                                    <a href="<?php echo lang('delete_post') . $row->id; ?>">Delete</a>
+                                    <a
+                                      href="<?php echo lang('edit_post') . $row->id; ?>"
+                                      class="btn btn-success">Edit</a>
+                                    <button
+                                      type="button"
+                                      class="btn btn-primary"
+                                      data-toggle="modal"
+                                      id="postDeleteButton"
+                                      data-id="<?php echo $row->id; ?>"
+                                      data-target="#deleteModel">Delete</button>
                                 </td>
                             </tr>
                             <?php } ?>
@@ -83,13 +95,3 @@
 
     </div>
     <!-- End of Content Wrapper -->
-    <script>
-      var delete_url = baseUrl + 'admin/delete_post/';
-      function delete(){
-        window.location.href = delete_url;
-      }
-      function set_id(id){
-        delete_url += id;
-      }
-
-    </script>

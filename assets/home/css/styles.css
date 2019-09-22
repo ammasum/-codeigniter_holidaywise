@@ -1798,6 +1798,21 @@ background: transparent url(../images/whychooseus.jpg) no-repeat scroll center c
     bottom: 10px;
     color: grey;
 }
-.hotelpage{
+/* .hotelpage{
 	background: 
+} */
+
+
+/*=====================================
+Blog css 22-09-19
+====================================*/
+.round-media{
+  width: 90%;
+}
+
+.round-media img{
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
 }

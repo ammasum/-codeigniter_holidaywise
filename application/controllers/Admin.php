@@ -10,6 +10,7 @@ class Admin extends CI_Controller{
         $this->load->library('form_validation');
         $this->load->model('users_mdl');
         $this->load->model('posts_mdl');
+        $this->load->helper('admin');
 
         if(!$this->auth->is_loggin()){
             redirect('user/login');
@@ -17,7 +18,6 @@ class Admin extends CI_Controller{
     }
 
     public function index(){
-        $this->lang->load('admin_url', 'english');
         $this->_view('index');
     }
 
@@ -25,6 +25,7 @@ class Admin extends CI_Controller{
         if($this->input->method() == 'post'){
             $this->form_validation->set_rules('title', 'Title', 'required');
             $this->form_validation->set_rules('post_content', 'Post Content', 'required');
+            $this->form_validation->set_rules('status', 'Status', 'required|in_list[0,1]');
             if($this->form_validation->run()){
                 $img_ext = '';
                 if (is_uploaded_file($_FILES['image']['tmp_name'])) {
@@ -52,15 +53,15 @@ class Admin extends CI_Controller{
                     $img_ext = '';
                     if (is_uploaded_file($_FILES['image']['tmp_name'])) {
                         
-                        $exist_img_name = $post_id .$post[0]->img;
-                        $exist_image = lang('post_img') . $exist_img_name;
-                        $exist_image_thumb = lang('post_img') . $exist_img_name;
+                        $exist_img_name = $post_id . $post[0]->img;
+                        $exist_image = lang('post_img_server') . $exist_img_name;
+                        $exist_image_thumb = lang('post_img_thumb_server') . $exist_img_name;
                         $this->_file_delete($exist_image, $exist_image_thumb);
 
                         $img_ext = '.' . pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
                         $this->_post_image_upload($post_id . $img_ext);
                     }
-                    $this->posts_mdl->update_post_data($img_ext);
+                    $this->posts_mdl->update_post_data($post_id, $img_ext);
                     $this->session->set_flashdata('body_message', 'Post Successfully Updated');
                     redirect('admin/post_list');
                 }
@@ -77,8 +78,8 @@ class Admin extends CI_Controller{
         if($post){
             $post = $post->result();
             $exist_img_name = $post_id . $post[0]->img;
-            $exist_image = lang('post_img') . $exist_img_name;
-            $exist_image_thumb = lang('post_img') . $exist_img_name;
+            $exist_image = lang('post_img_server') . $exist_img_name;
+            $exist_image_thumb = lang('post_img_thumb_server') . $exist_img_name;
             $this->_file_delete($exist_image, $exist_image_thumb);
             $this->posts_mdl->delete_post($post_id);
             $this->session->set_flashdata('body_message', 'Post Successfully Delete');
@@ -94,12 +95,12 @@ class Admin extends CI_Controller{
         $this->_view('post/post_list', $data);
     }
 
-    private function _view($page, $header_data = "", $page_data =""){
+    private function _view($page, $data =""){
         $path = "admin/";
-        $this->load->view($path . "inc/header", $header_data);
-        $this->load->view($path . "inc/sidebar", $header_data);
-        $this->load->view($path . "pages/" . $page, $page_data);
-        $this->load->view($path . "inc/footer", $page_data);
+        $this->load->view($path . "inc/header", $data);
+        $this->load->view($path . "inc/sidebar", $data);
+        $this->load->view($path . "pages/" . $page, $data);
+        $this->load->view($path . "inc/footer");
     }
 
     private function _post_image_upload($file_name){
@@ -140,9 +141,16 @@ class Admin extends CI_Controller{
 		$args = func_num_args();
 		for($i = 0; $i < $args; $i++){
 			if(file_exists(func_get_arg($i))){
-				unlink(func_get_arg($i));
-			}
-		}
+				if(!unlink(func_get_arg($i))){
+                    echo "File not deleted. May be Permission problem";
+                    return false;
+                }
+			}else{
+                echo "File not exists " . func_get_arg($i);
+                return false;
+            }
+        }
+        return true;
 	}
 
     private function _error($status_code){

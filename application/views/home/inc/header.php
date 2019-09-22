@@ -81,6 +81,9 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Umrah</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo lang('blog'); ?>">Blog</a>
+      </li>
 
     </ul>
 

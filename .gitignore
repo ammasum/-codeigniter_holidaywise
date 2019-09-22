@@ -4,6 +4,7 @@ application/cache/*
 !application/cache/index.html
 
 template
+*.jpg
 
 application/logs/*
 !application/logs/index.html

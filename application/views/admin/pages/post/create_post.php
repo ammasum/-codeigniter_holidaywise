@@ -19,7 +19,6 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
               <?php echo validation_errors(); ?>
             </div>
             <div class="card-body">
@@ -30,7 +29,7 @@
                 echo form_open_multipart(current_url(), $form_attr);
               ?>
 
-                <div class="form-row">
+                <div class="form-row mb-2">
                   <div class="col-md-6">
                     <label for="">Post Title</label>
                     <input type="text" name="title" class="form-control">
@@ -38,6 +37,16 @@
                   <div class="col-md-6">
                     <label for="">Post Images</label>
                     <input type="file" name="image" class="form-control-file">
+                  </div>
+                </div>
+
+                <div class="form-row mb-2">
+                  <div class="col-md-6">
+                    <label for="">Status</label>
+                    <select name="status" class="form-control" required="">
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
                   </div>
                 </div>
 

@@ -1,4 +1,4 @@
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="deleteModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,11 +8,11 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+        Confirm Delete
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" onclick="delete()" class="btn btn-primary">Delete</button>
+        <button type="button" id="confirmDeletePost" class="btn btn-primary">Delete</button>
       </div>
     </div>
   </div>
