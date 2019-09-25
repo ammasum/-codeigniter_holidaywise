@@ -1,0 +1,43 @@
+.scope{
+    position: relative;
+}
+
+.airport-search-result{
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 999;
+}
+
+.view{
+    display: block !important;
+}
+
+.ticket-section-area{
+    display: none;
+    position: absolute;
+    width: 100%;
+}
+
+.ticket-info-button{
+    height: 50px;
+    padding: 4px;
+}
+
+.hp-50{
+    height: 50px;
+}
+
+.custom-submit{
+    height: 50px;
+}
+
+.place-box{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}

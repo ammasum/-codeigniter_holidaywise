@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="<?php echo $assets_path . 'css/animate.css'; ?>">
 
 
+    <link rel="stylesheet" href="<?php echo $assets_path . 'flight-search/flightSearch.css'; ?>" >
     <link rel="stylesheet" href="<?php echo $assets_path . 'css/styles.css'; ?>" >
 
     <title>HolidayWise, Best holiday offers!</title>

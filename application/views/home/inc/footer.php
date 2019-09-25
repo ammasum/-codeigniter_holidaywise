@@ -88,6 +88,7 @@
     <script src="<?php echo $assets_path . 'js/jquery.counterup.min.js' ?>"></script>
     <script src="<?php echo $assets_path . 'js/wow.min.js'; ?>"></script>
     <script src="<?php echo $assets_path . 'js/custom.js'; ?>"></script>
+    <script src="<?php echo $assets_path . 'flight-search/flightSearch.js'; ?>"></script>
 
   </body>
 </html>
