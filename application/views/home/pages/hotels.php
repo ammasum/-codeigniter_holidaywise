@@ -1,4 +1,3 @@
-<?php include 'header.php'; ?>
 <section class="hotelpage">
   
 </section>
@@ -520,20 +519,3 @@
                 </div>
             </div>
         </section>
-
-
-
-
- <?php include 'footer.php'; ?>       
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="js/jquery-3.3.1.min.js" ></script>
-    <script src="js/bootstrap.min.js" ></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.waypoints.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/custom.js"></script>
-
-  </body>
-</html>

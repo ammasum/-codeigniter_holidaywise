@@ -10,6 +10,7 @@ class Home extends CI_Controller{
         $this->_view("index");
     }
 
+
     private function _view($page, $data = ''){
         $path = "home/";
         $this->load->view($path . "inc/header", $data);

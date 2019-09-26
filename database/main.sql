@@ -18,6 +18,13 @@ CREATE TABLE posts(
     creator INT(5)
 );
 
+CREATE TABLE flight_search_id_cache(
+    id INT(5) PRIMARY KEY AUTO_INCREMENT,
+    search_id VARCHAR(200),
+    status BOOLEAN,
+    doc TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 
 

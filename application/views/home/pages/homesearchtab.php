@@ -1,26 +1,10 @@
 <div class="search-tabs" id="search-tabs-2" ng-app="holidaywiseSearchFlight">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="container mb-5">
     <h1 class="text-center">Search</h1>
     <div class="row">
         <div class="col-12">
-            <form action="" method="get">
+            <form action="<?php echo base_url() . 'flight/search'; ?>" method="get">
                 <div class="form-row">
 
                     <div class="col-md-6 scope scope-origin">
@@ -78,6 +62,15 @@
                                     <div class="col-3"><span class="increase">+</span></div>
                                 </div>
                             </div>
+                            <div class="tricket-section infants-ticket-section">
+                                <input type="hidden" name="infants" value="0">
+                                <div class="row">
+                                    <div class="col-4">Children</div>
+                                    <div class="col-3"><span class="decrease">-</span></div>
+                                    <div class="col-2"><span class="value">0</span></div>
+                                    <div class="col-3"><span class="increase">+</span></div>
+                                </div>
+                            </div>
                             <button class="close-ticket-section">Done</button>
                         </div>
                     </div>
@@ -90,29 +83,4 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div><!-- end search-tabs -->
+</div>

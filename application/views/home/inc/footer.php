@@ -89,6 +89,19 @@
     <script src="<?php echo $assets_path . 'js/wow.min.js'; ?>"></script>
     <script src="<?php echo $assets_path . 'js/custom.js'; ?>"></script>
     <script src="<?php echo $assets_path . 'flight-search/flightSearch.js'; ?>"></script>
+    <script src="<?php echo $assets_path . 'flight-search/flatpickr.js'; ?>"></script>
 
+    <script>
+    $("#depart_date").flatpickr({
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d"
+    });
+    $("#return_date").flatpickr({
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d"
+    });
+    </script>
   </body>
 </html>

@@ -134,6 +134,7 @@ function getData(url, handler){
 
 var inputAdultsTicket = $('input[name="adults"]'),
     inputchildrenTicket = $('input[name="children"]'),
+    inputInfantsTicket = $('input[name="infants"]'),
     totalNumberOfTicket = $("#numberOfTicket"),
     ticketSectionArea = $(".ticket-section-area");
 
@@ -175,10 +176,32 @@ $(".children-ticket-section .decrease").click(function(){
     }
 });
 
-$("#openTicketSection").click(function(){
+$(".infants-ticket-section .increase").click(function(){
+    let value = parseInt(inputchildrenTicket.val());
+    value = value || 0; 
+    value += 1;
+    inputInfantsTicket.val(value);
+    $(".children-ticket-section .value").html(value);
+    updateTotalNumberOfTicket();
+});
+
+$(".infants-ticket-section .decrease").click(function(){
+    let value = parseInt(inputchildrenTicket.val());
+    value = value || 0; 
+    if(value > 0){
+        value -= 1;
+        inputInfantsTicket.val(value);
+        $(".children-ticket-section .value").html(value);
+        updateTotalNumberOfTicket();
+    }
+});
+
+$("#openTicketSection").click(function(event){
+    event.preventDefault();
     ticketSectionArea.toggle(".3");
 });
-$(".close-ticket-section").click(function(){
+$(".close-ticket-section").click(function(event){
+    event.preventDefault();
     ticketSectionArea.toggle(".3");
 });
 
