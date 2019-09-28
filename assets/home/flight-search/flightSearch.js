@@ -260,21 +260,24 @@ function updateTotalNumberOfTicket() {
 
 var flightSearchResult = $("#flightSearchResult");
 
+
 if (flightSearchResult) {
 	let search_id = flightSearchResult.attr("data-flightSearchid");
-	$.ajax({
-		url: baseUrl + "flight/search_result/" + search_id
-	}).done(function(data) {
-		if (data) {
-			let aciveFligts = getActiveFlight(data);
-			aciveFligts.forEach(function(flight) {
-				if (flight) {
-					let data = renderSearchResultToHtml(flight);
-					appendFlightSearchResult(data);
-				}
-			});
-		}
-	});
+	setTimeout(function(){
+		$.ajax({
+			url: baseUrl + "flight/search_result/" + search_id
+		}).done(function(data) {
+			if (data) {
+				let aciveFligts = getActiveFlight(data);
+				aciveFligts.forEach(function(flight) {
+					if (flight) {
+						let data = renderSearchResultToHtml(flight);
+						appendFlightSearchResult(data);
+					}
+				});
+			}
+		});
+	}, 3000);
 }
 
 function getActiveFlight(data) {
@@ -285,6 +288,7 @@ function getActiveFlight(data) {
 		}
 		return false;
 	});
+	console.log(dataArray);
 	return dataArray;
 
 }

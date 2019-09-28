@@ -75,6 +75,7 @@ class Flight extends CI_Controller{
         $data["origin"] = $this->input->get("origin_iata");
         $data["destination"] = $this->input->get("destination_iata");
         $data["depart_date"] = $this->input->get("depart_date");
+        $data["return_date"] = $this->input->get("return_date");
         $signature = "";
         $list_arr = array(
             'host', 'locale', 'marker', 'adults', 'children', 'infants',
