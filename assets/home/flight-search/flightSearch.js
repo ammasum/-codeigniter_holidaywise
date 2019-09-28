@@ -123,6 +123,7 @@ function renderSearchNoItem(renderScope) {
 function renderSearchItem(obj, renderScope) {
 	let city = obj.city_name,
 		cityCode = obj.city_code,
+		airportCode = obj.code,
 		country = obj.country_name,
 		countryCode = obj.country_name,
 		fullName = obj.city_fullname,
@@ -136,7 +137,7 @@ function renderSearchItem(obj, renderScope) {
 			city +
 			'"' +
 			'data-cityCode="' +
-			cityCode +
+			airportCode +
 			'"' +
 			'data-country="' +
 			country +
@@ -153,7 +154,7 @@ function renderSearchItem(obj, renderScope) {
 					"</small>" +
 				"</div>" +
 				'<div class="col-4">' +
-				cityCode +
+				airportCode +
 				"</div>" +
 			"</div>" +
 		"</div>"
@@ -309,21 +310,42 @@ function renderSearchResultToHtml(data) {
 
 	// }
 	// let price = ;
+	let turnAround = false;
+	let proposals = data.proposals[0];
 	let gateId = data.meta.gates[0].id;
-	let terms = data.proposals[0].terms;
+	let terms;
 	let carrierCode = data.proposals[0].validating_carrier;
 	let gateInfo = data.gates_info[gateId.toString()];
-	let origin  = data.segments[0].origin;
-	let destination  = data.segments[0].destination;
-	let stops = `<li>${origin} <i class="fas fa-long-arrow-alt-right"></i></li>`;
+	let depart_origin  = proposals.segments_airports[0][0];
+	let depart_destination  = proposals.segments_airports[0][1];
+	let return_origin;
+	let return_destination;
+	let return_route = [];
+	let depart_stops = `<li>${depart_origin} <i class="fas fa-long-arrow-alt-right"></i></li>`;
+	let return_stops;
 	let stopsArr = data.proposals[0].stops_airports;
 	let carrierName = data.airlines[carrierCode].name;
-	
+	while(Array.isArray(proposals)){
+		proposals = proposals[0];
+	}
+	terms = proposals.terms;
+	//Need to working here with temrs. Sometime data.meta.gates[0].id return wronge id
+
+	if(data.segments.length == 2){
+		turnAround = true;
+		return_origin = data.segments[1].origin;
+		return_destination = data.segments[1].destination;
+		return_origin  = proposals.segments_airports[1][0];
+		return_destination  = proposals.segments_airports[1][1];
+		return_route = `<li>${return_origin} <i class="fas fa-long-arrow-alt-right"></i></li>`;
+	}
+
 	for(let i = 0; i < stopsArr.length; i++){
-		if(i == stopsArr.length - 1){
-			stops += `<li>${stopsArr[i]} </li>`;
+		if(stopsArr[i] == depart_destination){
+			depart_stops += `<li>${stopsArr[i]} </li>`;
+			break;
 		}else{
-			stops += `<li>${stopsArr[i]} <i class="fas fa-long-arrow-alt-right"></i></li>`;
+			depart_stops += `<li>${stopsArr[i]} <i class="fas fa-long-arrow-alt-right"></i></li>`;
 		}
 	}
 	let htmlResult = 
@@ -336,7 +358,7 @@ function renderSearchResultToHtml(data) {
 			'<div class="item-body">' +
 				'<div class="item-title">' +
 					'<h2>' +
-						`<a href="flight-detail.html">${carrierName} : ${origin} - ${destination}</a>` +
+						`<a href="flight-detail.html">${carrierName} : ${depart_origin} - ${depart_destination}</a>` +
 					'</h2>' +
 				'</div>' +
 				'<table class="item-table">' +
@@ -352,7 +374,7 @@ function renderSearchResultToHtml(data) {
  						'<tr>' +
 							'<td class="route">' +
 								'<ul>' +
-									stops +
+									depart_stops +
 								'</ul>' +
 							'</td>' +
 							'<td class="depart">' +
