@@ -5,8 +5,32 @@
 .airport-search-result{
     display: none;
     position: absolute;
-    width: 100%;
+    width: 98%;
+    padding: 10px;
+    background: #d4d4d4;
+    border-bottom-left-radius: 3%;
+    border-bottom-right-radius: 3%;
     z-index: 999;
+}
+.airport-search-result .result-item{
+    padding: 10px;
+    background: rgb(142, 135, 124);
+}
+
+.airport-search-result .result-item:hover{
+    cursor: pointer;
+    background: rgb(168, 161, 150);
+}
+
+.location-show-static{
+    position: absolute;
+    line-height: 40px;
+    cursor: text;
+    top: 11px;
+    left: 12px;
+    height: 41px;
+    width: 95%;
+    background: #e9ecef;
 }
 
 .view{
@@ -15,13 +39,33 @@
 
 .ticket-section-area{
     display: none;
+    z-index: 999;
     position: absolute;
-    width: 100%;
+    width: 97%;
+    padding: 10px;
+    background: rgb(168, 161, 150);
+}
+
+.ticket-section{
+    padding: 5px;
+    line-height: 30px;
+    text-align: center;
 }
 
 .ticket-info-button{
     height: 50px;
     padding: 4px;
+}
+
+.operator-round-icon{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: block;
+    cursor: pointer;
+}
+.operator-round-icon:hover{
+    background: rgb(142, 135, 124)
 }
 
 .hp-50{

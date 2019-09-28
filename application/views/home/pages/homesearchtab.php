@@ -1,4 +1,3 @@
-<div class="search-tabs" id="search-tabs-2" ng-app="holidaywiseSearchFlight">
 
 <div class="container mb-5">
     <h1 class="text-center">Search</h1>
@@ -48,27 +47,27 @@
                                 <input type="hidden" name="adults" value="1">
                                 <div class="row">
                                     <div class="col-4">Adults</div>
-                                    <div class="col-3"><span class="decrease">-</span></div>
+                                    <div class="col-3"><span class="decrease operator-round-icon"><i class="fas fa-minus"></i></span></div>
                                     <div class="col-2"><span class="value">1</span></div>
-                                    <div class="col-3"><span class="increase">+</span></div>
+                                    <div class="col-3"><span class="increase operator-round-icon"><i class="fas fa-plus"></i></span></div>
                                 </div>
                             </div>
-                            <div class="tricket-section children-ticket-section">
+                            <div class="ticket-section children-ticket-section">
                                 <input type="hidden" name="children" value="0">
                                 <div class="row">
                                     <div class="col-4">Children</div>
-                                    <div class="col-3"><span class="decrease">-</span></div>
+                                    <div class="col-3"><span class="decrease operator-round-icon"><i class="fas fa-minus"></i></span></div>
                                     <div class="col-2"><span class="value">0</span></div>
-                                    <div class="col-3"><span class="increase">+</span></div>
+                                    <div class="col-3"><span class="increase operator-round-icon"><i class="fas fa-plus"></i></span></div>
                                 </div>
                             </div>
-                            <div class="tricket-section infants-ticket-section">
+                            <div class="ticket-section infants-ticket-section">
                                 <input type="hidden" name="infants" value="0">
                                 <div class="row">
                                     <div class="col-4">Children</div>
-                                    <div class="col-3"><span class="decrease">-</span></div>
+                                    <div class="col-3"><span class="decrease operator-round-icon"><i class="fas fa-minus"></i></span></div>
                                     <div class="col-2"><span class="value">0</span></div>
-                                    <div class="col-3"><span class="increase">+</span></div>
+                                    <div class="col-3"><span class="increase operator-round-icon"><i class="fas fa-plus"></i></span></div>
                                 </div>
                             </div>
                             <button class="close-ticket-section">Done</button>
@@ -83,4 +82,3 @@
     </div>
 </div>
 
-</div>

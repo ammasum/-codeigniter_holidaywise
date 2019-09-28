@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="<?php echo $assets_path . 'css/styles.css'; ?>" >
 
     <title>HolidayWise, Best holiday offers!</title>
+    <script>
+      const baseUrl = '<?php echo base_url(); ?>';
+    </script>
   </head>
   <body>
     <div id="top-bar" class="tb-text-white">

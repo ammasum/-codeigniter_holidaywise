@@ -10,6 +10,10 @@ class Flights_mdl extends CI_Model{
         return $this->db->insert_id();
     }
 
-    
+    public function get_search_id_data($id){
+        $this->db->where('id', $id);
+        $result = $this->db->get('flight_search_id_cache');
+        return $result->num_rows() > 0 ? $result : false;
+    }
 
 }

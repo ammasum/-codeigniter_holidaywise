@@ -20,8 +20,9 @@
     </div>
 
   </div>
-  
-<?php include 'homesearchtab.php'; ?>  
+  <div class="search-tabs" id="search-tabs-2" ng-app="holidaywiseSearchFlight">
+    <?php include 'homesearchtab.php'; ?>
+  </div>
 </div>
 <!-- banner and search ends here -->
 <!-- start top destinations -->
