@@ -26,6 +26,16 @@
     <script>
       const baseUrl = '<?php echo base_url(); ?>';
     </script>
+    <style>
+      <?php if($page = "home"){ ?>
+      .search-tabs{
+        color: white;
+      }
+      .location-show-static{
+        color: black;
+      }
+      <?php } ?>
+    </style>
   </head>
   <body>
     <div id="top-bar" class="tb-text-white">
@@ -34,8 +44,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                         <div id="info">
                             <ul class="list-unstyled list-inline">
-                                <li class="list-inline-item"><span><i class="fas fa-map-marker-alt
-"></i></span>29 Land St, Lorem City, CA</li>
+                                <li class="list-inline-item"><span><i class="fas fa-map-marker-alt"></i></span>29 Land St, Lorem City, CA</li>
                                 <li class="list-inline-item"><span><i class="fas fa-phone-alt"></i></span>+00 123 4567</li>
                             </ul>
                         </div><!-- end info -->
@@ -58,20 +67,24 @@
         
         <nav class="navbar navbar-expand-lg navbar-light bg-light topnavbar">
           <div class="container">
-  <a class="navbar-brand" href="index.php">
+  <a class="navbar-brand" href="<?php echo lang("home"); ?>">
     <img src="<?php echo $assets_path . 'images/logo.png'; ?>"/>
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto ">
       <li class="nav-item active">
-        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="flights.php">Flight</a>
+        <a class="nav-link" href="<?php echo lang("home"); ?>">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="hotels.php">Hotel</a>

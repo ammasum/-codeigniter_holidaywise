@@ -42,4 +42,8 @@ class Posts_mdl extends CI_Model{
         return $result->num_rows() > 0 ? $result : false;
     }
 
+    public function count_post(){
+        return $this->db->count_all_results('users');
+    }
+
 }

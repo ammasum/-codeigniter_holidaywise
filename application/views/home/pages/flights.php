@@ -18,6 +18,16 @@
                         class="filter-item-wrapper"
                         id="flightSearchResult"
                         data-flightSearchid="<?php echo $search_id; ?>">
+                        <div class="fligt-loding-message">
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 text-center">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <h3>Searching For Flight</h3>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 

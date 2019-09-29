@@ -18,7 +18,8 @@ class Admin extends CI_Controller{
     }
 
     public function index(){
-        $this->_view('index');
+        $data["nums_post"] = $this->posts_mdl->count_post();
+        $this->_view('index', $data);
     }
 
     public function create_post(){

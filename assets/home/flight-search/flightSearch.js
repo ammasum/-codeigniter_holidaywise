@@ -104,12 +104,16 @@ $(document).on("click", ".airport-search-result .result-item", function(event) {
 		$(".scope-origin .location-show-static .country").html(country);
 		hiddenOrigin.val(cityCode);
 		originInputBox.val(city);
+		$('input[name="origin_city"]').val(city);
+		$('input[name="origin_country"]').val(country);
 	} else {
 		$(".scope-destination .location-show-static .city").html(city + ",");
 		$(".scope-destination .location-show-static .country").html(country);
 		$(".scope-destination .location-show-static .city-code").html(cityCode);
 		hiddenDestination.val(cityCode);
 		destinationInputBox.val(city);
+		$('input[name="destination_city"]').val(city);
+		$('input[name="destination_country"]').val(country);
 	}
 	$(this)
 		.parent()
@@ -177,8 +181,7 @@ $(".adults-ticket-section .increase").click(function() {
 	let value = parseInt(inputAdultsTicket.val());
 	value += 1;
 	inputAdultsTicket.val(value);
-	$(".adults-ticket-section .value").html(value);
-	updateTotalNumberOfTicket();
+	updateAllTicketInfo();
 });
 
 $(".adults-ticket-section .decrease").click(function() {
@@ -186,8 +189,7 @@ $(".adults-ticket-section .decrease").click(function() {
 	if (value > 1) {
 		value -= 1;
 		inputAdultsTicket.val(value);
-		$(".adults-ticket-section .value").html(value);
-		updateTotalNumberOfTicket();
+		updateAllTicketInfo();
 	}
 });
 
@@ -196,8 +198,7 @@ $(".children-ticket-section .increase").click(function() {
 	value = value || 0;
 	value += 1;
 	inputchildrenTicket.val(value);
-	$(".children-ticket-section .value").html(value);
-	updateTotalNumberOfTicket();
+	updateAllTicketInfo();
 });
 
 $(".children-ticket-section .decrease").click(function() {
@@ -206,8 +207,7 @@ $(".children-ticket-section .decrease").click(function() {
 	if (value > 0) {
 		value -= 1;
 		inputchildrenTicket.val(value);
-		$(".children-ticket-section .value").html(value);
-		updateTotalNumberOfTicket();
+		updateAllTicketInfo();
 	}
 });
 
@@ -216,8 +216,7 @@ $(".infants-ticket-section .increase").click(function() {
 	value = value || 0;
 	value += 1;
 	inputInfantsTicket.val(value);
-	$(".infants-ticket-section .value").html(value);
-	updateTotalNumberOfTicket();
+	updateAllTicketInfo();
 });
 
 $(".infants-ticket-section .decrease").click(function() {
@@ -226,8 +225,7 @@ $(".infants-ticket-section .decrease").click(function() {
 	if (value > 0) {
 		value -= 1;
 		inputInfantsTicket.val(value);
-		$(".infants-ticket-section .value").html(value);
-		updateTotalNumberOfTicket();
+		updateAllTicketInfo();
 	}
 });
 
@@ -239,6 +237,16 @@ $(".close-ticket-section").click(function(event) {
 	event.preventDefault();
 	ticketSectionArea.toggle(".3");
 });
+
+function updateAllTicketInfo(){
+	let adultsValue = inputAdultsTicket.val();
+	let childrenValue = inputchildrenTicket.val();
+	let infantsValue = inputInfantsTicket.val();
+	$(".adults-ticket-section .value").html(adultsValue);
+	$(".children-ticket-section .value").html(childrenValue);
+	$(".infants-ticket-section .value").html(infantsValue);
+	updateTotalNumberOfTicket();
+}
 
 function updateTotalNumberOfTicket() {
 	let adults = parseInt(inputAdultsTicket.val());
@@ -257,9 +265,12 @@ function updateTotalNumberOfTicket() {
 	totalNumberOfTicket.html(total);
 }
 
+updateAllTicketInfo();
+
 // Flight Search Result Page
 
 var flightSearchResult = $("#flightSearchResult");
+const searchLoadingMessage = $(".fligt-loding-message");
 
 
 if (flightSearchResult) {
@@ -268,6 +279,9 @@ if (flightSearchResult) {
 		$.ajax({
 			url: baseUrl + "flight/search_result/" + search_id
 		}).done(function(data) {
+			searchLoadingMessage.css({
+				display: "none"
+			});
 			if (data) {
 				let aciveFligts = getActiveFlight(data);
 				aciveFligts.forEach(function(flight) {
@@ -322,7 +336,7 @@ function renderSearchResultToHtml(data) {
 	let return_destination;
 	let return_route = [];
 	let depart_stops = `<li>${depart_origin} <i class="fas fa-long-arrow-alt-right"></i></li>`;
-	let return_stops;
+	let return_stops = "";
 	let stopsArr = data.proposals[0].stops_airports;
 	let carrierName = data.airlines[carrierCode].name;
 	while(Array.isArray(proposals)){
@@ -333,19 +347,25 @@ function renderSearchResultToHtml(data) {
 
 	if(data.segments.length == 2){
 		turnAround = true;
-		return_origin = data.segments[1].origin;
 		return_destination = data.segments[1].destination;
 		return_origin  = proposals.segments_airports[1][0];
 		return_destination  = proposals.segments_airports[1][1];
-		return_route = `<li>${return_origin} <i class="fas fa-long-arrow-alt-right"></i></li>`;
 	}
-
-	for(let i = 0; i < stopsArr.length; i++){
-		if(stopsArr[i] == depart_destination){
-			depart_stops += `<li>${stopsArr[i]} </li>`;
+	let routeIndex = 0;
+	for(; routeIndex < stopsArr.length; routeIndex++){
+		if(stopsArr[routeIndex] == depart_destination){
+			depart_stops += `<li>${stopsArr[routeIndex]} </li>`;
 			break;
 		}else{
-			depart_stops += `<li>${stopsArr[i]} <i class="fas fa-long-arrow-alt-right"></i></li>`;
+			depart_stops += `<li>${stopsArr[routeIndex]} <i class="fas fa-long-arrow-alt-right"></i></li>`;
+		}
+	}
+	for(; routeIndex > 0; routeIndex++){
+		if(stopsArr[routeIndex] == return_destination){
+			return_stops += `<li>${stopsArr[routeIndex]} </li>`;
+			break;
+		}else{
+			return_stops += `<li>${stopsArr[routeIndex]} <i class="fas fa-long-arrow-alt-right"></i></li>`;
 		}
 	}
 	let htmlResult = 
@@ -387,26 +407,28 @@ function renderSearchResultToHtml(data) {
 							'<td class="duration">' +
 								'<span>38h5m</span>' +
 							'</td>' +
-						'</tr>' +
-						'<tr>' +
-							'<td class="route">' +
-								'<ul>' +
-									'<li>JFK <i class="fas fa-long-arrow-alt-right"></i></li>' +
-									'<li>SVO <i class="fas fa-long-arrow-alt-right"></i></li>' +
-									'<li>HAN </li>' +
-								'</ul>' +
-							'</td>' +
-							'<td class="depart">' +
-								'<span>10:25</span>' +
-							'</td>' +
-							'<td class="arrive">' +
-								'<span>12:30</span>' +
-								'<span class="date">15 MAr</span>' +
-							'</td>' +
-							'<td class="duration">' +
-								'<span>38h5m</span>' +
-							'</td>' +
-						'</tr>' +
+						'</tr>';
+	if(turnAround){
+		htmlResult +=
+		'<tr>' +
+			'<td class="route">' +
+				'<ul>' +
+					return_stops +
+				'</ul>' +
+			'</td>' +
+			'<td class="depart">' +
+				'<span>10:25</span>' +
+			'</td>' +
+			'<td class="arrive">' +
+				'<span>12:30</span>' +
+				'<span class="date">15 MAr</span>' +
+			'</td>' +
+			'<td class="duration">' +
+				'<span>38h5m</span>' +
+			'</td>' +
+		'</tr>';
+	}
+	htmlResult +=
 					'</tbody>' +
 				'</table>' +
 			'</div>' +
@@ -415,8 +437,21 @@ function renderSearchResultToHtml(data) {
 					`<span class="amount">₽${terms[gateId.toString()].price}</span>` +
 					gateInfo.label +
 				'</div>' +
-				'<a href="#" class="btn btn-warning">Book now</a>' +
+				'<button class="ticketBookingBtn btn btn-warning"' +
+					`data-ticketLink="${terms[gateId.toString()].url}"` +
+					`data-uuid="${data.meta.uuid}"` +
+					`class="btn btn-warning">Book now</button>` +
 			'</div>' +
-		'</div>'
+		'</div>';
 	return htmlResult;
 }
+
+$(document).on("click", ".ticketBookingBtn", function(event) {
+	let ticketLink = $(this).attr("data-ticketLink");
+	let uuid = $(this).attr("data-uuid");
+	let url = `${baseUrl}flight/ticket_link/${uuid}/${ticketLink}`;
+	$.get(url, function(data){
+		let dataObj = JSON.parse(data);
+		window.location.href = dataObj.url
+	});
+});

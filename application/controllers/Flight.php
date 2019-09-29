@@ -51,6 +51,17 @@ class Flight extends CI_Controller{
         $this->_view("flights", $data);
     }
 
+    public function ticket_link($search_id, $link_id){
+        $url = 'http://api.travelpayouts.com/v1/flight_searches/';
+        $url .= $search_id . '/clicks/';
+        $url .= $link_id . '.json';
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result =  curl_exec($ch);
+        curl_close($ch);
+        echo $result;
+    }
+
     public function search_result($id){
         $result = $this->flights_mdl->get_search_id_data($id);
         if($result){
