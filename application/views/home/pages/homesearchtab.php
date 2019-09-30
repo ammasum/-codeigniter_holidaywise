@@ -91,7 +91,7 @@
                             class="form-control hp-50"
                             id="return_date"
                             name="return_date"
-                            value="<?php echo $this->input->get("depart_date"); ?>">
+                            value="<?php echo $this->input->get("return_date"); ?>">
                     </div>
                     <div class="col-md-4 scope scope-ticket">
                         <label>Passengers</label>

@@ -14,6 +14,7 @@ class Flight extends CI_Controller{
         $searchData["user_ip"] = "localhost";
         $searchData["locale"] = "en";
         $searchData["trip_class"] = "Y";
+        $searchData["currency"] = "gbp";
         $searchData["segments"] = array(
             array(
                 "date" => $this->input->get("depart_date"),
@@ -89,7 +90,7 @@ class Flight extends CI_Controller{
         $data["return_date"] = $this->input->get("return_date");
         $signature = "";
         $list_arr = array(
-            'host', 'locale', 'marker', 'adults', 'children', 'infants',
+            'currency', 'host', 'locale', 'marker', 'adults', 'children', 'infants',
             'depart_date', 'destination', 'origin'
         );
         if($this->input->get("return_date")){

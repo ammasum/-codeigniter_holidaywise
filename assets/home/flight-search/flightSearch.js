@@ -434,7 +434,7 @@ function renderSearchResultToHtml(data) {
 			'</div>' +
 			'<div class="item-price-more">' +
 				'<div class="price">' +
-					`<span class="amount">₽${terms[gateId.toString()].price}</span>` +
+					`<span class="amount">$${terms[gateId.toString()].price}</span>` +
 					gateInfo.label +
 				'</div>' +
 				'<button class="ticketBookingBtn btn btn-warning"' +

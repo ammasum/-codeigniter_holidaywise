@@ -10,6 +10,10 @@ class Home extends CI_Controller{
         $this->_view("index");
     }
 
+    public function terms_and_condition(){
+        $this->_view("terms_and_condition");
+    }
+
 
     private function _view($page, $data = ''){
         $path = "home/";

@@ -12,9 +12,8 @@
                         <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 footer-widget ftr-contact">
                             <h3 class="footer-heading">CONTACT US</h3>
                             <ul class="list-unstyled">
-                              <li><span><i class="fa fa-map-marker"></i></span>29 Land St, Lorem City, CA</li>
-                              <li><span><i class="fa fa-phone"></i></span>+00 123 4567</li>
-                                <li><span><i class="fa fa-envelope"></i></span>info@holidaywise.com</li>
+                                <li><span><i class="fa fa-map-marker"></i></span>152 - 160 City Road, London, United Kingdom, EC1V 2NX</li>
+                                <li><span><i class="fa fa-envelope"></i></span>support@holidaywize.com</li>
                             </ul>
                         </div><!-- end columns -->
                         
@@ -68,7 +67,7 @@
                         
                         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right" >
                             <ul class="list-unstyled list-inline">
-                              <li  class="list-inline-item"><a href="#">Terms &amp; Condition</a></li>
+                              <li  class="list-inline-item"><a href="<?php echo lang("terms_and_condition"); ?>">Terms &amp; Condition</a></li>
                                 <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
                             </ul>
                         </div><!-- end columns -->
