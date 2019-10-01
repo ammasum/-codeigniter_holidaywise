@@ -14,6 +14,7 @@
                             <ul class="list-unstyled">
                                 <li><span><i class="fa fa-map-marker"></i></span>152 - 160 City Road, London, United Kingdom, EC1V 2NX</li>
                                 <li><span><i class="fa fa-envelope"></i></span>support@holidaywize.com</li>
+                                <li><span><i class="fas fa-building"></i></span>Company Registration number: 12171066</li>
                             </ul>
                         </div><!-- end columns -->
                         
@@ -43,12 +44,24 @@
                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 footer-widget ftr-about">
                             <h3 class="footer-heading">ABOUT US</h3>
                             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit.</p>
-                            <ul class="social-links list-inline list-unstyled">
-                              <li class="list-inline-item"><a href="#"><span><i class="fab fa-facebook-f"></i></span></a></li>
-                              <li class="list-inline-item"><a href="#"><span><i class="fab fa-twitter"></i></span></a></li>
+							<ul class="social-links list-inline list-unstyled">
+								<li class="list-inline-item">
+									<a href="https://www.instagram.com/holidaywize/" target="_blank">
+										<span><i class="fab fa-instagram"></i></span>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a href="https://www.pinterest.co.uk/support1657/" target="_blank">
+										<span>
+											<i class="fab fa-pinterest-p"></i>
+										</span>
+									</a>
+								</li>
+                              	<li class="list-inline-item"><a href="#"><span><i class="fab fa-facebook-f"></i></span></a></li>
+                              	<li class="list-inline-item"><a href="#"><span><i class="fab fa-twitter"></i></span></a></li>
                                 <li class="list-inline-item"><a href="#"><span><i class="fab fa-google-plus"></i></span></a></li>
-                                <li class="list-inline-item"><a href="#"><span><i class="fab fa-pinterest-p"></i></span></a></li>
-                                <li class="list-inline-item"><a href="#"><span><i class="fab fa-instagram"></i></span></a></li>
+
+
                                 <li class="list-inline-item"><a href="#"><span><i class="fab fa-linkedin"></i></span></a></li>
                                 <li class="list-inline-item"><a href="#"><span><i class="fab fa-youtube-play"></i></span></a></li>
                             </ul>
@@ -87,6 +100,11 @@
     <script src="<?php echo $assets_path . 'js/jquery.counterup.min.js' ?>"></script>
     <script src="<?php echo $assets_path . 'js/wow.min.js'; ?>"></script>
     <script src="<?php echo $assets_path . 'js/custom.js'; ?>"></script>
+
+<!--	**********Vue and Axios**********-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+	<script src="<?php echo lang("assets") . "flight-search/vue.js"; ?>"></script>
+
     <script src="<?php echo $assets_path . 'flight-search/flightSearch.js'; ?>"></script>
     <script src="<?php echo $assets_path . 'flight-search/flatpickr.js'; ?>"></script>
 

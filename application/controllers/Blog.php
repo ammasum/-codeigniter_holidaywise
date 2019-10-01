@@ -1,7 +1,9 @@
 <?php
 
 class Blog extends CI_Controller{
-    public function __construct(){
+	private $posts_mdl;
+
+	public function __construct(){
         parent::__construct();
         $this->lang->load('home_url', 'english');
         $this->load->model('posts_mdl');
@@ -24,7 +26,11 @@ class Blog extends CI_Controller{
     }
 
     private function _error($code){
-
+		$error_name = array(
+			"400" => "Bad Url"
+		);
+		$data["error_name"] = (string)$error_name[$code];
+		$this->_view("error", $data);
     }
 
     private function _view($page, $data = ""){

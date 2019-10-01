@@ -268,190 +268,125 @@ function updateTotalNumberOfTicket() {
 updateAllTicketInfo();
 
 // Flight Search Result Page
-
-var flightSearchResult = $("#flightSearchResult");
-const searchLoadingMessage = $(".fligt-loding-message");
-
-
-if (flightSearchResult) {
-	let search_id = flightSearchResult.attr("data-flightSearchid");
-	setTimeout(function(){
-		$.ajax({
-			url: baseUrl + "flight/search_result/" + search_id
-		}).done(function(data) {
-			searchLoadingMessage.css({
-				display: "none"
-			});
-			if (data) {
-				let aciveFligts = getActiveFlight(data);
-				aciveFligts.forEach(function(flight) {
-					if (flight) {
-						let data = renderSearchResultToHtml(flight);
-						appendFlightSearchResult(data);
+Vue.prototype.$http = axios;
+new Vue({
+	el: "#flightResult",
+	data:{
+		flightResults: [],
+		isTurnAround: false,
+		flightSearchMsg: true,
+		filterSort: ""
+	},
+	methods:{
+		bookNow: function(url, uuid){
+			let getUrlAdd = `${baseUrl}flight/ticket_link/${uuid}/${url}`;
+			this.$http.get(getUrlAdd)
+				.then(function(data){
+					if(data){
+						window.location.href = data.data.url;
 					}
 				});
+		},
+		flightSortDir: function(type){
+			return function(a, b){
+				return (a[type] < b[type]) ? a : b;
 			}
-		});
-	}, 3000);
-}
-
-function getActiveFlight(data) {
-	let dataArray = JSON.parse(data);
-	dataArray = dataArray.map(function(row) {
-		if (row.proposals.length > 0) {
-			return row;
 		}
-		return false;
-	});
-	console.log(dataArray);
-	return dataArray;
-
-}
-
-function appendFlightSearchResult(data) {
-	flightSearchResult.append(data);
-}
-
-var airlinesMapping = {
-	"EK": "Emirates",
-	"BG": "Biman Bangladesh Airlines",
-	"QR": "Qatar Airways"
-
-};
-
-function renderSearchResultToHtml(data) {
-	// for(proposals.terms.price ){
-
-	// }
-	// let price = ;
-	let turnAround = false;
-	let proposals = data.proposals[0];
-	let gateId = data.meta.gates[0].id;
-	let terms;
-	let carrierCode = data.proposals[0].validating_carrier;
-	let gateInfo = data.gates_info[gateId.toString()];
-	let depart_origin  = proposals.segments_airports[0][0];
-	let depart_destination  = proposals.segments_airports[0][1];
-	let return_origin;
-	let return_destination;
-	let return_route = [];
-	let depart_stops = `<li>${depart_origin} <i class="fas fa-long-arrow-alt-right"></i></li>`;
-	let return_stops = "";
-	let stopsArr = data.proposals[0].stops_airports;
-	let carrierName = data.airlines[carrierCode].name;
-	while(Array.isArray(proposals)){
-		proposals = proposals[0];
-	}
-	terms = proposals.terms;
-	//Need to working here with temrs. Sometime data.meta.gates[0].id return wronge id
-
-	if(data.segments.length == 2){
-		turnAround = true;
-		return_destination = data.segments[1].destination;
-		return_origin  = proposals.segments_airports[1][0];
-		return_destination  = proposals.segments_airports[1][1];
-	}
-	let routeIndex = 0;
-	for(; routeIndex < stopsArr.length; routeIndex++){
-		if(stopsArr[routeIndex] == depart_destination){
-			depart_stops += `<li>${stopsArr[routeIndex]} </li>`;
-			break;
-		}else{
-			depart_stops += `<li>${stopsArr[routeIndex]} <i class="fas fa-long-arrow-alt-right"></i></li>`;
+		getActiveResult: function(data){
+			let activeResult = [];
+			let parseResult = JSON.parse(JSON.stringify(data));
+			for(let i = 0; i < parseResult.length; i++){
+				if(parseResult[i].proposals.length > 0){
+					activeResult.push(parseResult[i]);
+				}
+			}
+			console.log(activeResult);
+			return activeResult;
+		},
+		formattedFlight: function(flights){
+			return flights.map(function(flight){
+				let formattedFlight = {};
+				let turnAround = false;
+				let proposals = flight.proposals[0];
+				let gateId = flight.meta.gates[0].id;
+				let terms;
+				let carrierCode;
+				let gateInfo = flight.gates_info[gateId.toString()];
+				let depart_origin  = proposals.segments_airports[0][0];
+				let depart_destination  = proposals.segments_airports[0][1];
+				let return_origin;
+				let return_destination;
+				let uuid = flight.meta.uuid;
+				let return_route = [];
+				let depart_stops = `<li>${depart_origin}<i class="fas fa-long-arrow-alt-right"></i></li>`;
+				let return_stops = "";
+				let stopsArr = flight.proposals[0].stops_airports;
+				let carrierName;
+				while(Array.isArray(proposals)){
+					proposals = proposals[0];
+				}
+				terms = proposals.terms;
+				carrierCode = proposals.validating_carrier;
+				carrierName = flight.airlines[carrierCode].name;
+				if(flight.segments.length === 2){
+					turnAround = true;
+					return_origin  = proposals.segments_airports[1][0];
+					return_destination  = proposals.segments_airports[1][1];
+				}
+				let routeIndex = 0;
+				for(; routeIndex < stopsArr.length; routeIndex++){
+					if(stopsArr[routeIndex] === depart_destination){
+						depart_stops += `<li>${stopsArr[routeIndex]}</li>`;
+						break;
+					}else{
+						depart_stops += `<li>${stopsArr[routeIndex]}<i class="fas fa-long-arrow-alt-right"></i></li>`;
+					}
+				}
+				routeIndex++;
+				return_stops += `<li>${return_origin}<i class="fas fa-long-arrow-alt-right"></i></li>`;
+				for(; routeIndex < stopsArr.length; routeIndex++){
+					if(stopsArr[routeIndex] === return_destination){
+						return_stops += `<li>${stopsArr[routeIndex]}</li>`;
+						break;
+					}else{
+						return_stops += `<li>${stopsArr[routeIndex]}<i class="fas fa-long-arrow-alt-right"></i></li>`;
+					}
+				}
+				formattedFlight.isTurnAround = turnAround;
+				formattedFlight.carrierCode = carrierCode;
+				formattedFlight.carrierName = carrierName;
+				formattedFlight.departOrigin = depart_origin;
+				formattedFlight.departDestination = depart_destination;
+				formattedFlight.departStops = depart_stops;
+				formattedFlight.returnStops = return_stops;
+				formattedFlight.price = terms[gateId.toString()].price;
+				formattedFlight.departOrigin = depart_origin;
+				formattedFlight.bookUrl = terms[gateId.toString()].url;
+				formattedFlight.uuid = uuid;
+				return formattedFlight;
+			});
 		}
-	}
-	for(; routeIndex > 0; routeIndex++){
-		if(stopsArr[routeIndex] == return_destination){
-			return_stops += `<li>${stopsArr[routeIndex]} </li>`;
-			break;
-		}else{
-			return_stops += `<li>${stopsArr[routeIndex]} <i class="fas fa-long-arrow-alt-right"></i></li>`;
+	},
+	computed: {
+		sort: function(flightResults){
+			let vi = this;
+			return this.flightResults.filter(function(flight){
+				return vi.filterSort ? vi.flightSortDir() : true;
+			});
 		}
+	},
+	created(){
+		let vi = this;
+		let id = document.querySelector(".filter-item-wrapper").getAttribute("data-flightSearchid");
+		setTimeout(function(){
+			vi.$http.get(baseUrl + "flight/search_result/" + id)
+				.then(function(data){
+					vi.flightSearchMsg = false;
+					if(data){
+						let activeResult = vi.getActiveResult(data.data);
+						vi.flightResults = vi.formattedFlight(activeResult);
+					}
+				})
+		}, 3000);
 	}
-	let htmlResult = 
-		'<div class="flight-item">' +
-			'<div class="item-media">' +
-				'<div class="image-cover">' +
-					`<img src="${baseUrl}assets/home/images/flight/1.jpg" alt="">` +
-                '</div>' +
-			'</div>' +
-			'<div class="item-body">' +
-				'<div class="item-title">' +
-					'<h2>' +
-						`<a href="flight-detail.html">${carrierName} : ${depart_origin} - ${depart_destination}</a>` +
-					'</h2>' +
-				'</div>' +
-				'<table class="item-table">' +
- 					'<thead>' +
-						'<tr>' +
-							'<th class="route">Route</th>' +
-							'<th class="depart">Depart</th>' +
-							'<th class="arrive">Arrive</th>' +
-							'<th class="duration">Duration</th>' +
-						'</tr>' +
-					'</thead>' +
-					'<tbody>' +
- 						'<tr>' +
-							'<td class="route">' +
-								'<ul>' +
-									depart_stops +
-								'</ul>' +
-							'</td>' +
-							'<td class="depart">' +
-								'<span>10:25</span>' +
-								'<span class="date">14 Feb</span>' +
-							'</td>' +
-							'<td class="arrive">' +
-								'<span>12:30</span>' +
-							'</td>' +
-							'<td class="duration">' +
-								'<span>38h5m</span>' +
-							'</td>' +
-						'</tr>';
-	if(turnAround){
-		htmlResult +=
-		'<tr>' +
-			'<td class="route">' +
-				'<ul>' +
-					return_stops +
-				'</ul>' +
-			'</td>' +
-			'<td class="depart">' +
-				'<span>10:25</span>' +
-			'</td>' +
-			'<td class="arrive">' +
-				'<span>12:30</span>' +
-				'<span class="date">15 MAr</span>' +
-			'</td>' +
-			'<td class="duration">' +
-				'<span>38h5m</span>' +
-			'</td>' +
-		'</tr>';
-	}
-	htmlResult +=
-					'</tbody>' +
-				'</table>' +
-			'</div>' +
-			'<div class="item-price-more">' +
-				'<div class="price">' +
-					`<span class="amount">$${terms[gateId.toString()].price}</span>` +
-					gateInfo.label +
-				'</div>' +
-				'<button class="ticketBookingBtn btn btn-warning"' +
-					`data-ticketLink="${terms[gateId.toString()].url}"` +
-					`data-uuid="${data.meta.uuid}"` +
-					`class="btn btn-warning">Book now</button>` +
-			'</div>' +
-		'</div>';
-	return htmlResult;
-}
-
-$(document).on("click", ".ticketBookingBtn", function(event) {
-	let ticketLink = $(this).attr("data-ticketLink");
-	let uuid = $(this).attr("data-uuid");
-	let url = `${baseUrl}flight/ticket_link/${uuid}/${ticketLink}`;
-	$.get(url, function(data){
-		let dataObj = JSON.parse(data);
-		window.location.href = dataObj.url
-	});
 });

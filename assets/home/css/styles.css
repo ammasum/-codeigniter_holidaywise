@@ -948,11 +948,8 @@ background: transparent url(../images/whychooseus.jpg) no-repeat scroll center c
 	margin-bottom:21px;
 }
 
-.footer-widget.ftr-contact li:nth-child(2){
-	font-size:20px;
-}
 
-.footer-widget.ftr-contact li .fa{
+.footer-widget.ftr-contact li i{
 	font-size:20px;
 	width:25px;
 	margin-right:7px;

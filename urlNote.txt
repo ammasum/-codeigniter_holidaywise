@@ -1,1 +1,0 @@
-curl -v -H 'Accept-Encoding:gzip,deflate,sdch' http://api.travelpayouts.com/v1/flight_search_results?uuid=e7e09423-e078-11e9-b7e8-0e551dff6fa3 --compressed

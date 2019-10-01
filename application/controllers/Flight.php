@@ -7,6 +7,7 @@ class Flight extends CI_Controller{
         $this->lang->load('home_url', 'english');
         $this->load->helper('home_helper');
     }
+
     public function search(){
         $searchData["signature"] = "";
         $searchData["marker"] = "235918";
@@ -79,6 +80,51 @@ class Flight extends CI_Controller{
             
         }
     }
+
+    public function vue_search(){
+		$searchData["signature"] = "";
+		$searchData["marker"] = "235918";
+		$searchData["host"] = "localhost";
+		$searchData["user_ip"] = "localhost";
+		$searchData["locale"] = "en";
+		$searchData["trip_class"] = "Y";
+		$searchData["currency"] = "gbp";
+		$searchData["segments"] = array(
+			array(
+				"date" => $this->input->get("depart_date"),
+				"destination" => $this->input->get("destination_iata"),
+				"origin" => $this->input->get("origin_iata")
+			)
+		);
+		if($this->input->get('return_date')){
+			array_push($searchData["segments"], array(
+				"date" => $this->input->get("return_date"),
+				"destination" => $this->input->get("origin_iata"),
+				"origin" => $this->input->get("destination_iata")
+			));
+		}
+		$searchData["passengers"] = array(
+			"adults" => $this->input->get("adults"),
+			"children" => $this->input->get("children"),
+			"infants" => $this->input->get("infants")
+		);
+
+		$signature = $this->_createSignature($searchData);
+
+		$searchData["signature"] = $signature;
+
+		$url = 'http://api.travelpayouts.com/v1/flight_search';
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($searchData));
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$result =  json_decode(curl_exec($ch));
+		curl_close($ch);
+
+		$id = $this->flights_mdl->insert_search_id($result->search_id);
+		$data["search_id"] = $id;
+		$this->_view("vue_flight", $data);
+	}
 
     private function _createSignature($data){
         $data["adults"] = $this->input->get("adults");

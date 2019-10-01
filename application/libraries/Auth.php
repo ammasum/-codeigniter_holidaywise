@@ -5,6 +5,10 @@ class Auth{
     public function __construct(){
         $this->ci =& get_instance();
     }
+
+    public function get_user_id(){
+        return $this->ci->session->userdata("id");
+    }
     
     public function login($user){
         $sess_data = array(
