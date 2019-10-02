@@ -272,16 +272,15 @@ Vue.prototype.$http = axios;
 new Vue({
 	el: "#flightResult",
 	data:{
-		greeting: "Hello world",
 		flightResults: [],
 		isTurnAround: false,
 		flightSearchMsg: true,
-		filterSort: ""
+		filterSort: "",
+		filterStops: [],
+		maxStops: 0,
+		airportList:{}
 	},
 	methods:{
-		dummy: function(){
-			return this.filterSort;
-		},
 		bookNow: function(url, uuid){
 			let getUrlAdd = `${baseUrl}flight/ticket_link/${uuid}/${url}`;
 			this.$http.get(getUrlAdd)
@@ -307,7 +306,16 @@ new Vue({
 			console.log(activeResult);
 			return activeResult;
 		},
+		sortFlight: function(flights){
+			let vi = this;
+			return flights.sort(vi.flightSortDir(this.filterSort));
+		},
+		stopsFilter: function(flights){
+			let vi = this;
+			return flights.filter((flight) => vi.filterStops.includes(flight.maxStops));
+		},
 		formattedFlight: function(flights){
+			let vi = this;
 			return flights.map(function(flight){
 				let formattedFlight = {};
 				let turnAround = false;
@@ -356,6 +364,9 @@ new Vue({
 						return_stops += `<li>${stopsArr[routeIndex]}<i class="fas fa-long-arrow-alt-right"></i></li>`;
 					}
 				}
+				if(proposals.max_stops > vi.maxStops){
+					vi.maxStops = proposals.max_stops;
+				}
 				formattedFlight.isTurnAround = turnAround;
 				formattedFlight.carrierCode = carrierCode;
 				formattedFlight.carrierName = carrierName;
@@ -363,6 +374,9 @@ new Vue({
 				formattedFlight.departDestination = depart_destination;
 				formattedFlight.departStops = depart_stops;
 				formattedFlight.returnStops = return_stops;
+				formattedFlight.departNumsStops = 0;
+				formattedFlight.returnNumsStops = 0;
+				formattedFlight.maxStops = proposals.max_stops;
 				formattedFlight.price = terms[gateId.toString()].price;
 				formattedFlight.departOrigin = depart_origin;
 				formattedFlight.bookUrl = terms[gateId.toString()].url;
@@ -372,9 +386,12 @@ new Vue({
 		}
 	},
 	computed:{
-		sortFlight: function(){
-			let vi = this;
-			return this.filterSort ? vi.flightResults.sort(vi.flightSortDir(this.filterSort)) : vi.flightResults;
+		filterFlight: function(){
+			let flights = this.filterSort ? this.sortFlight(this.flightResults) : this.flightResults;
+			flights = this.filterStops.length > 0 ? this.stopsFilter(flights) : flights;
+			console.log("Max stops");
+			console.log(this.maxStops);
+			return flights;
 		}
 	},
 	created(){

@@ -31,10 +31,7 @@
 								</div>
 							</div>
 
-
-							<p>{{ dummy() + "Sort type" }}</p>
-
-							<div class="flight-item" v-for="flight in sortFlight">
+							<div class="flight-item" v-for="flight in filterFlight">
 								<div class="item-media">
 									<div class="image-cover">
 										<img src="<?php echo lang('assets'); ?>images/flight/2.jpg" alt="">
@@ -95,7 +92,7 @@
 								</div>
 								<div class="item-price-more">
 									<div class="price">
-										<span class="amount">${{ flight.price }}</span>
+										<span class="amount">£{{ flight.price }}</span>
 										exclude Fare
 									</div>
 									<button @click="bookNow(flight.bookUrl, flight.uuid)" class="btn btn-warning">Book now</button>
@@ -151,26 +148,28 @@
 								<input class="form-check-input" type="checkbox" id="Turn-around" value="Turn-around">
 								<label class="form-check-label" for="Turn-around">Turn-around</label>
 							</div>
-							<div class="form-group faph">
-								<label for="from">From</label>
-								<input type="text" class="form-control " id="from" >
-								<i class="fas fa-map-marker-alt"></i>
-							</div>
-							<div class="form-group faph">
-								<label for="to">To</label>
-								<input type="text" class="form-control" id="to">
-								<i class="fas fa-map-marker-alt"></i>
-							</div>
 						</div>
 					</div>
 					<!-- END / WIDGET -->
 
 					<div class="widget">
 						<div class="form-group">
-							<select v-model="filterSort" id="">
+							<h3>Sort By</h3>
+							<select v-model="filterSort" class="form-control">
 								<option value="">Select</option>
 								<option value="price">Price</option>
 							</select>
+						</div>
+					</div>
+
+					<div class="widget">
+						<div class="form-group" v-if="maxStops > 0">
+							<h3>Filter By Stops</h3>
+							<template v-for="n in maxStops">
+								<input type="checkbox" :id="'stopsFilter' + n" v-model="filterStops" :value="n">
+								<label :for="'stopsFilter' + n">{{ n }}</label>
+								<br>
+							</template>
 						</div>
 					</div>
 
