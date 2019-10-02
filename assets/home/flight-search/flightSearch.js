@@ -272,12 +272,16 @@ Vue.prototype.$http = axios;
 new Vue({
 	el: "#flightResult",
 	data:{
+		greeting: "Hello world",
 		flightResults: [],
 		isTurnAround: false,
 		flightSearchMsg: true,
 		filterSort: ""
 	},
 	methods:{
+		dummy: function(){
+			return this.filterSort;
+		},
 		bookNow: function(url, uuid){
 			let getUrlAdd = `${baseUrl}flight/ticket_link/${uuid}/${url}`;
 			this.$http.get(getUrlAdd)
@@ -289,9 +293,9 @@ new Vue({
 		},
 		flightSortDir: function(type){
 			return function(a, b){
-				return (a[type] < b[type]) ? a : b;
+				return (a[type] > b[type]) ? 1 : -1;
 			}
-		}
+		},
 		getActiveResult: function(data){
 			let activeResult = [];
 			let parseResult = JSON.parse(JSON.stringify(data));
@@ -367,12 +371,10 @@ new Vue({
 			});
 		}
 	},
-	computed: {
-		sort: function(flightResults){
+	computed:{
+		sortFlight: function(){
 			let vi = this;
-			return this.flightResults.filter(function(flight){
-				return vi.filterSort ? vi.flightSortDir() : true;
-			});
+			return this.filterSort ? vi.flightResults.sort(vi.flightSortDir(this.filterSort)) : vi.flightResults;
 		}
 	},
 	created(){

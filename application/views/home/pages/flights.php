@@ -1,5 +1,5 @@
 
-<section class="filter-page">
+<section class="filter-page" id="flightResult">
 
 
 
@@ -13,7 +13,7 @@
 		<div class="row">
 
 			<div class="col-md-9 col-md-push-3">
-				<div id="flightResult">
+				<div>
 					<div class="filter-page__content">
 						<div
 							class="filter-item-wrapper"
@@ -32,9 +32,9 @@
 							</div>
 
 
+							<p>{{ dummy() + "Sort type" }}</p>
 
-
-							<div class="flight-item" v-for="flight in flightResults | sort">
+							<div class="flight-item" v-for="flight in sortFlight">
 								<div class="item-media">
 									<div class="image-cover">
 										<img src="<?php echo lang('assets'); ?>images/flight/2.jpg" alt="">
@@ -320,7 +320,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
-	<script src="<?php echo lang("assets") . "flight-search/vue.js"; ?>"></script>
-
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script>
+<script src="<?php echo lang("assets") . "flight-search/vue.js"; ?>"></script>
